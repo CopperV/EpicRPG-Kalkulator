@@ -1,0 +1,44 @@
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    margin-top: 8vh;
+
+    width: 80%;
+    height: 90%;
+    background: rgba(7, 7, 7, 0.75);
+
+    border-radius: 8vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#left-side {
+    flex: 1;
+    margin-left: 1vh;
+    margin-right: 0.5vh;
+}
+
+#right-side {
+    flex: 1;
+    margin-left: 0.5vh;
+    margin-right: 1vh;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

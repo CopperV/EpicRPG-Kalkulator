@@ -1,0 +1,183 @@
+<div class="main-container">
+  <div class="container">
+    <div id="left-side">
+      <p *ngFor="let item of toKeyArray(stats)">
+        {{ item }} ->
+        <mat-form-field appearance="outline">
+          <input matInput 
+                 type="number"
+                 [(ngModel)]="stats[item]"
+                 (keypress)="validateNumber($event)"
+                 required>
+          <mat-error *ngIf="numberControl.hasError('pattern')">
+            Only integer values are allowed
+          </mat-error>
+        </mat-form-field>
+      </p>
+    </div>
+    <div id="right-side">
+      <div id="klasa" style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;"> 
+        Klasa<br>
+        <mat-button-toggle-group appearance="legacy" [(ngModel)]="presentKlasa" *ngFor="let klasa of klasy" hideSingleSelectionIndicator="true">
+          <mat-button-toggle [value]="klasa" [ngStyle]="{'color': klasa.color}">{{klasa.name}}</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div id="damage-type" style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
+        Typ obrażeń<br>
+        <mat-button-toggle-group appearance="legacy" [(ngModel)]="presentDamageType" *ngFor="let damageType of damageTypes" hideSingleSelectionIndicator="true">
+          <mat-button-toggle [value]="damageType" [ngStyle]="{'color': damageType.color}">{{damageType.name}}</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div id="crit" style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
+        Obrażenia krytyczne <br>
+        <mat-button-toggle-group [(ngModel)]="isCrit" hideSingleSelectionIndicator="true">
+          <mat-button-toggle [value]="true">Tak</mat-button-toggle>
+          <mat-button-toggle [value]="false">Nie</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div id="hp" style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
+        Życie przeciwnika (w %) <br>
+        <mat-slider
+          [max]="100"
+          [min]="0"
+          [step]="0.01"
+          [discrete]="false"
+          [showTickMarks]="false">
+          <input matSliderThumb [(ngModel)]="mobPercentHp">
+        </mat-slider>
+        <mat-form-field appearance="outline">
+          <input matInput 
+                 type="number" 
+                 [(ngModel)]="mobPercentHp" 
+                 [min]="0"
+                 [max]="100"
+                 required>
+          <span matSuffix>%</span>
+        </mat-form-field>
+      </div>
+      <div *ngIf="presentKlasa.name==='Wojownik'">
+        <h2>Umiejętności</h2>
+        <mat-button-toggle-group multiple="true" hideMultipleSelectionIndicator="true">
+          <mat-button-toggle value="slugaBeliara" [checked]="slugaBeliara" (change)="slugaBeliara = !slugaBeliara">Sługa Beliara</mat-button-toggle>
+          <mat-button-toggle value="polnocnyBarbarzynca" [checked]="polnocnyBarbarzynca" (change)="polnocnyBarbarzynca = !polnocnyBarbarzynca">Północny barbarzyńca</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div *ngIf="presentKlasa.name==='Myśliwy'">
+        <h2>Umiejętności</h2>
+        <mat-button-toggle-group multiple="true" hideMultipleSelectionIndicator="true">
+          <mat-button-toggle value="ciosKrytyczny" (change)="ciosKrytyczny = !ciosKrytyczny">Cios krytyczny</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div *ngIf="presentKlasa.name==='Wojownik' && polnocnyBarbarzynca && presentDamageType.name==='Wręcz'">
+        <p>Broń czy pięści?</p>
+        <mat-button-toggle-group [(ngModel)]="hasWeapon" hideSingleSelectionIndicator="true">
+          <mat-button-toggle [value]="true">Broń</mat-button-toggle>
+          <mat-button-toggle [value]="false">Pięści</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div *ngIf="presentDamageType.name==='Dystansowe'">
+        <p>Typ broni</p>
+        <mat-button-toggle-group [(ngModel)]="isBow" hideSingleSelectionIndicator="true">
+          <mat-button-toggle [value]="true">Łuk</mat-button-toggle>
+          <mat-button-toggle [value]="false">Kusza</mat-button-toggle>
+        </mat-button-toggle-group>
+        <div *ngIf="isBow">
+          <p>Napięcie łuku</p>
+          <mat-slider
+            [max]="100"
+            [min]="0"
+            [step]="1"
+            [discrete]="false"
+            [showTickMarks]="false">
+            <input matSliderThumb [(ngModel)]="bowTension">
+          </mat-slider>
+          <mat-form-field appearance="outline">
+            <input matInput 
+                   type="number" 
+                   [(ngModel)]="bowTension" 
+                   [min]="0"
+                   [max]="100"
+                   required>
+            <span matSuffix>%</span>
+          </mat-form-field>
+        </div>
+        <div *ngIf="!isBow">
+          <p>Szybkie ładowanie</p>
+          <mat-slider
+            [max]="5"
+            [min]="0"
+            [step]="1"
+            [discrete]="false"
+            [showTickMarks]="false">
+            <input matSliderThumb [(ngModel)]="quickCharge">
+          </mat-slider>
+          <mat-form-field appearance="outline">
+            <input matInput 
+                   type="number" 
+                   [(ngModel)]="quickCharge" 
+                   [min]="0"
+                   [max]="5"
+                   (keypress)="validateNumber($event)"
+                   [formControl]="numberControl"
+                   required>
+            <mat-error *ngIf="numberControl.hasError('pattern')">
+              Only integer values are allowed
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div *ngIf="presentDamageType.name==='Magiczne'">
+        <p>
+          Obrażenia od runy ->
+          <mat-form-field appearance="outline">
+            <input matInput 
+                   type="number" 
+                   [(ngModel)]="runeDamage" 
+                   (keypress)="validateNumber($event)"
+                   [formControl]="numberControl"
+                   required>
+            <mat-error *ngIf="numberControl.hasError('pattern')">
+              Only integer values are allowed
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          Wpływ umysłu ->
+          <mat-form-field appearance="outline">
+            <input matInput 
+                   type="number" 
+                   [(ngModel)]="wplywUmyslu" 
+                   required>
+          </mat-form-field>
+        </p>
+        <p>
+          Typ magii ->
+          <mat-form-field>
+            <mat-select [(ngModel)]="presentMagicType">
+              @for (magicType of magicTypes; track $index) {
+                <mat-option [value]="magicType">{{ magicType }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </p>
+      </div>
+      <div id="calculated" style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto;">
+        <div>
+          <p style="color: white">Minimalne -> {{ getCalculatedDamage(PlayerDamageValueType.MIN) }}</p>
+          <p style="color: white">Obrażenia -> {{ getCalculatedDamage(PlayerDamageValueType.NORMAL) }}</p>
+          <p style="color: white">Maksymalne -> {{ getCalculatedDamage(PlayerDamageValueType.MAX) }}</p>
+        </div>
+        <div *ngIf="presentKlasa.name==='Wojownik' && slugaBeliara">
+          <h3 style="color: white">SŁUGA BELIARA</h3>
+          <p style="color: white">Minimalne -> {{ getCalculatedClawDamage(PlayerDamageValueType.MIN) }}</p>
+          <p style="color: white">Obrażenia -> {{ getCalculatedClawDamage(PlayerDamageValueType.NORMAL) }}</p>
+          <p style="color: white">Maksymalne -> {{ getCalculatedClawDamage(PlayerDamageValueType.MAX) }}</p>
+        </div>
+        <div>
+          <h3 style="color: white">OCHRONA</h3>
+          <p style="color: white">Przed obrażeniami -> {{ getCalculatedDefense() }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
