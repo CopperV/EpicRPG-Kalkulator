@@ -10,6 +10,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSelectModule } from '@angular/material/select';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   imports: [
@@ -22,13 +24,16 @@ import { MatSelectModule } from '@angular/material/select';
     MatCardModule,
     MatSliderModule,
     MatSelectModule,
+    FontAwesomeModule,
     BrowserAnimationsModule
   ],
   declarations: [
     KalkulatorComponent,
-    KalkulatorBaseComponent
+    KalkulatorBaseComponent,
+    NavbarComponent
   ], exports: [
-    KalkulatorBaseComponent
+    KalkulatorBaseComponent,
+    NavbarComponent
   ]
 })
 export class KalkulatorModule { }
