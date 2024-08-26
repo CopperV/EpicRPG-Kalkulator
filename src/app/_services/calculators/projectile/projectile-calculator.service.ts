@@ -39,7 +39,8 @@ export class ProjectileCalculatorService {
     isBow: boolean,
     bowTension: number,
     quickCharge: number,
-    damageType: PlayerDamageValueType
+    damageType: PlayerDamageValueType,
+    clanDmgBoost: number
   ): number {
     let startList: {
       key: string,
@@ -145,6 +146,7 @@ export class ProjectileCalculatorService {
       })
     }
 
+    clanDmgBoost = this.baseUtils.clamp(clanDmgBoost, 0, 0.2);
     bowTension = this.baseUtils.clamp(bowTension, 0, 1);
     quickCharge = this.baseUtils.clamp(quickCharge, 0, 5);
 
@@ -167,6 +169,7 @@ export class ProjectileCalculatorService {
 
     let modifier: number = 1;
 
+    modifier += clanDmgBoost;
     if (klasa.name === "Myśliwy")
       modifier += 0.15;
 

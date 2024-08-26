@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FightUtilsService } from '../../utils/fight/fight-utils.service';
 import { PlayerKlasa, PlayerDamageValueType } from '../../../_models/player-models';
+import { UtilsService } from '../../utils/normal/utils.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,8 @@ import { PlayerKlasa, PlayerDamageValueType } from '../../../_models/player-mode
 export class MagicCalculatorService {
 
   constructor(
-    private utils: FightUtilsService
+    private utils: FightUtilsService,
+    private baseUtils: UtilsService
   ) { }
 
   getMagicCalculatedDamage(
@@ -20,8 +22,10 @@ export class MagicCalculatorService {
     runeDamage: number,
     wplywUmyslu: number,
     magicType: string,
-    damageType: PlayerDamageValueType
+    damageType: PlayerDamageValueType,
+    clanDmgBoost: number
   ): number {
+    clanDmgBoost = this.baseUtils.clamp(clanDmgBoost, 0, 0.2);
 
     let bounsDmg = 0;
     let level = stats["Poziom"];
@@ -49,9 +53,9 @@ export class MagicCalculatorService {
 
     let modifier: number = 1;
 
+    modifier += clanDmgBoost;
     if (klasa.name === "Mag")
       modifier += 0.1;
-
     if (crit && ciosKrytyczny && klasa.name === "Myśliwy")
       modifier += 0.15;
 

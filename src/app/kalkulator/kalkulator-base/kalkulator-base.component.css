@@ -1,34 +1,201 @@
 .main-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  font-family: 'BakemonoLight' !important;
+  font-size: 2vh !important;
+  color: #dddddd;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .container {
-    margin-top: 8vh;
+  margin-top: 8vh;
 
-    width: 80%;
-    height: 90%;
-    background: rgba(7, 7, 7, 0.75);
+  width: 80%;
+  height: 90%;
+  background: rgba(7, 7, 7, 0.75);
 
-    border-radius: 8vh;
+  border-radius: 3vw;
 
-    display: flex;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.container-flex {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  
+  flex: 1;
+  max-height: 80%;
+}
+
+/* Added for responsiveness on mobile devices */
+@media (max-aspect-ratio: 9/16) {
+  .container {
+    width: 95%;
+    height: 95%;
+    margin-top: 2vh;
+    border-radius: 5vw;
+  }
+
+  .container-flex {
+    flex-direction: column;
     align-items: center;
+  }
+
+  h2 {
+    font-size: 3vh;
+  }
+
+  h3 {
+    font-size: 2.4vh;
+  }
+
+  .inside-container {
+    margin-left: 2vw;
+    margin-right: 2vw;
+  }
+
+  #left-side, #right-side {
+    margin-top: 1vh;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  #calculated-footer {
+    margin-bottom: 2vh;
+  }
+
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    width: 40vw !important;
+    max-width: 40vw;
+    min-width: 30%;
+  }
+}
+
+.inside-main-container {
+  display: flex;
+  justify-content: left;
+  align-items: baseline;
+  height: auto;
+}
+
+.inside-container {
+  flex: 1;
+  margin-top: 0.5vh;
+  margin-bottom: 0.5vh;
+  margin-left: 1vw;
+  margin-right: 1vw;
+}
+
+.container-border {
+  background: rgba(20, 20, 20, 0.5);
+
+  border-style: solid;
+  border-radius: 1vw;
+  border-width: 2.5px;
+  border-image: linear-gradient(60deg, rgb(223, 223, 223), rgb(27, 240, 240)) 1;
+
+  margin-bottom: 1vh;
+}
+
+#calculated-footer {
+  margin-top: auto; /* Pushes the footer to the bottom of the container */ /* Optional: Set a background to distinguish the footer */
+  margin-bottom: 4vh;
+}
+
+h2 {
+  font-family: 'BakemonoRegular' !important;
+  font-weight: bold;
+  font-size: 3.6vh;
+
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-image: linear-gradient(60deg, rgb(223, 223, 223), rgb(27, 240, 240)) 1;
+  
+  margin-left: 1vw;
+  margin-right: 1vw;
+  margin-bottom: 0.3vh;
+}
+
+h3 {
+  font-family: 'BakemonoRegular' !important;
+  font-size: 2.8vh;
+  text-decoration: underline;
+  text-align: center;
+  
+  margin-left: 0.5vw;
+  margin-right: 0.5vw;
+  margin-bottom: 0.25vh;
 }
 
 #left-side {
-    flex: 1;
-    margin-left: 1vh;
-    margin-right: 0.5vh;
+  flex: 1;
+  margin-top: 3vh;
+  margin-left: 1vw;
+  margin-right: 0.5vw;
 }
 
 #right-side {
-    flex: 1;
-    margin-left: 0.5vh;
-    margin-right: 1vh;
+  flex: 2;
+  margin-top: 3vh;
+  margin-left: 0.5vw;
+  margin-right: 1vw;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  width: 5.5vw !important;
+  max-width: 6vw;
+  min-width: 1%;
+}
+
+::ng-deep .mdc-text-field--outlined .mat-mdc-form-field-infix, .mdc-text-field--no-label .mat-mdc-form-field-infix {
+  padding-top: 0.05vh !important;
+  padding-bottom: 0.05vh !important;
+}
+
+::ng-deep .mat-mdc-form-field-infix {
+  width: auto !important;
+  min-height: 0 !important;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper, .mat-mdc-form-field-bottom-align::before {
+  line-height: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+}
+
+::ng-deep .mdc-slider__track--active_fill {
+  border-color: rgb(223, 223, 223) !important;
+}
+
+::ng-deep .mdc-slider__thumb-knob {
+  border-color: rgb(27, 240, 240) !important;
+}
+
+::ng-deep .mdc-slider__thumb--focused .mdc-slider__thumb-knob {
+  border-color: rgb(27, 240, 240) !important;
+  background-color: #FFFFFF00;
+}
+
+::ng-deep .mdc-slider__tick-mark--active {
+  border-color: black !important;
+  background-color: black !important;
+}
+
+input {
+  text-align: right;
+}
+
+::ng-deep .mat-button-toggle {
+  background: rgba(7, 7, 7, 0.5) !important;
+}
+
+::ng-deep .mat-button-toggle-checked {
+  background: rgba(121, 121, 121, 0.5) !important;
 }
 
 /* Chrome, Safari, Edge, Opera */

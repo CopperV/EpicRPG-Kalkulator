@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PlayerDamageValueType, PlayerKlasa } from '../../../_models/player-models';
 import { FightUtilsService } from '../../utils/fight/fight-utils.service';
+import { UtilsService } from '../../utils/normal/utils.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,8 @@ export class MeleeCalculatorService {
   };
 
   constructor(
-    private utils: FightUtilsService
+    private utils: FightUtilsService,
+    private baseUtils: UtilsService
   ) { }
 
   getMeleeCalculatedDamage(
@@ -36,7 +38,8 @@ export class MeleeCalculatorService {
     polnocnyBarbarzynca: boolean,
     ciosKrytyczny: boolean,
     hasWeapon: boolean,
-    damageType: PlayerDamageValueType
+    damageType: PlayerDamageValueType,
+    clanDmgBoost: number
   ): number {
     let startList: {
       key: string,
@@ -108,6 +111,7 @@ export class MeleeCalculatorService {
       })
     }
 
+    clanDmgBoost = this.baseUtils.clamp(clanDmgBoost, 0, 0.2);
     let dmg = stats["Obrażenia"];
     if (klasa.name === "Wojownik" && polnocnyBarbarzynca && !hasWeapon)
       dmg += stats["Siła"] * 0.8 + stats["Wytrzymałość"] * 0.65
@@ -126,6 +130,7 @@ export class MeleeCalculatorService {
     
     let modifier: number = 1;
 
+    modifier += clanDmgBoost;
     if(crit && klasa.name === "Myśliwy")
       modifier += 0.15
     else if(!crit && klasa.name === "Wojownik")

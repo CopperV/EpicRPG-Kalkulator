@@ -66,6 +66,8 @@ export class KalkulatorBaseComponent implements OnInit {
   presentDamageType: PlayerDamageType = this.damageTypes[0];
 
   mobPercentHp: number = 100;
+  clanDmgBoost: number = 0;
+  clanDefBoost: number = 0;
 
   isCrit: boolean = false;
 
@@ -138,22 +140,23 @@ export class KalkulatorBaseComponent implements OnInit {
     if (this.presentDamageType.name === "Wręcz")
       result = this.meleeCalculator.getMeleeCalculatedDamage(
         this.stats, this.isCrit, this.presentKlasa, this.mobPercentHp / 100.,
-        this.polnocnyBarbarzynca, this.ciosKrytyczny, this.hasWeapon, damageType
+        this.polnocnyBarbarzynca, this.ciosKrytyczny, this.hasWeapon, damageType, this.clanDmgBoost / 100.
       );
     else if (this.presentDamageType.name === "Dystansowe")
       result = this.projectileCalculator.getProjectileCalculatedDamage(
         this.stats, this.isCrit, this.presentKlasa, this.mobPercentHp / 100.,
-        this.ciosKrytyczny, this.isBow, this.bowTension / 100., this.quickCharge, damageType
+        this.ciosKrytyczny, this.isBow, this.bowTension / 100., this.quickCharge, damageType, this.clanDmgBoost / 100.
       );
     else if (this.presentDamageType.name === "Magiczne")
       result = this.magicCalculator.getMagicCalculatedDamage(
         this.stats, this.isCrit, this.presentKlasa, this.mobPercentHp / 100.,
-        this.ciosKrytyczny, this.runeDamage, this.wplywUmyslu, this.presentMagicType, damageType)
+        this.ciosKrytyczny, this.runeDamage, this.wplywUmyslu, this.presentMagicType, damageType, this.clanDmgBoost / 100.
+      )
     return Math.floor(result);
   }
 
   getCalculatedDefense(): number {
-    return Math.floor(this.defenseCalculator.getDefenseCalculatedDamage(this.stats, this.presentKlasa));
+    return Math.floor(this.defenseCalculator.getDefenseCalculatedDamage(this.stats, this.presentKlasa, this.clanDefBoost / 100.));
   }
 
 }

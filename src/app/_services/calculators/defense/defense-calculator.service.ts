@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FightUtilsService } from '../../utils/fight/fight-utils.service';
 import { PlayerKlasa } from '../../../_models/player-models';
+import { UtilsService } from '../../utils/normal/utils.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +9,17 @@ import { PlayerKlasa } from '../../../_models/player-models';
 export class DefenseCalculatorService {
 
 constructor(
-  private utils: FightUtilsService
+  private utils: FightUtilsService,
+  private baseUtils: UtilsService
 ) { }
 
 getDefenseCalculatedDamage(
   stats: { [key: string]: number },
   klasa: PlayerKlasa,
+  clanDefBoost: number
 ): number {
+  clanDefBoost = this.baseUtils.clamp(clanDefBoost, 0, 0.1);
+
   let ochrona = stats["Ochrona"];
   let wytrzymalosc = stats["Wytrzymałość"];
 
@@ -22,10 +27,14 @@ getDefenseCalculatedDamage(
   let wytrzymaloscDamage = Math.max(0.0003 * wytrzymalosc * ochrona, 0);
 
   let finalOchrona = ochronaDamage + wytrzymaloscDamage;
-  if(klasa.name === "Wojownik")
-    finalOchrona *= 1.1;
 
-  return finalOchrona;
+  let modifier = 1;
+
+  modifier += clanDefBoost;
+  if(klasa.name === "Wojownik")
+    modifier += 0.1;
+
+  return finalOchrona * modifier;
 }
 
 }
