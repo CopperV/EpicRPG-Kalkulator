@@ -34,7 +34,7 @@ export class MagicCalculatorService {
     let krag = stats["Krąg"];
 
     if(wplywUmyslu > 0)
-      runeDamage += stats["Obrażenia"] / wplywUmyslu / 100.;
+      runeDamage += stats["Obrażenia"] / (wplywUmyslu * 100.);
     
     if(crit) {
       runeDamage *= 2;

@@ -140,7 +140,7 @@ export class ProjectileCalculatorService {
     if (sortedList.length > 1) {
       pickedList.push({
         key: sortedList[1].key,
-        value: sortedList[1].value,
+        value: sortedList[1].value * 0.5,
         comparable: sortedList[1].comparable,
         factor: sortedList[1].factor
       })
